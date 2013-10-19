@@ -65,49 +65,108 @@
     <div class="container">
       <br>
       <h1>Profile for Team Mana Madness</h1>
-      <div class="row">
-        <table class="table">
-          <tr>
-            <td><center><a href="personal.html">Jonathon Blonchek</center></td>
-			<td><center><a href="personal.html">Jennifer Hitch</center></td>
-			<td><center><a href="personal.html">Wallace Scott</center></td>
-          </tr>
-          <tr>
-		    <td><center>
-			  <a href="personal.html">
-			    <img src="assets/img/profile.jpg" style="max-height:200px;"/>
-			  </a/center>
-			</td>
-			<td><center>
-			  <a href="personal.html">
-			    <img src="assets/img/profile2.jpg" style="max-height:200px;"/>
-			  </a></center>
-			</td>
-			<td><center>
-			  <a href="personal.html">
-			    <img src="assets/img/profile3.jpg" style="max-height:200px;"/>
-			  </a></center>
-			</td>
-          </tr>
-        </table>
-      </div>
-    </div>
 
-	<div id="team" class="container">
-      <h2>Total calories raised: 10</h2>
-    </div>
-	
-    <div id="team" class="container">
-      <h2>Team Activity Log</h2>
-      <p>This is where your teams activity log will be.</p>
-    </div>
-	
-	<div id="personal" class="container">
-      <h2>Badges and Accolades</h2>
-	  <div class="row">
-        <img src="assets/img/badge1.png" title="saved the world" style="max-height:200px;"/>
-        <img src="assets/img/badge2.png" title="ran 100 miles" style="max-height:200px;"/>
-        <img src="assets/img/badge3.png" title="saved your first child" style="max-height:200px;"/>
+      <div class="row">
+
+        <div class="col-md-3">
+          <ul class="nav">
+            <li><a href="#info">Team Info</a></li>
+            <li><a href="#challenges">Challenges</a></li>
+            <li><a href="#activity">Activity Log</a></li>
+            <li><a href="#badges">Badges</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <div id="info">
+            <h2>Team Information</h2>
+
+            <div class="row">
+              <table class="table">
+                <tr>
+                  <td><center><a href="personal.html">Jonathon Blonchek</a></center></td>
+            <td><center><a href="personal.html">Jennifer Hitch</a></center></td>
+            <td><center><a href="personal.html">Wallace Scott</a></center></td>
+                </tr>
+                <tr>
+              <td><center>
+              <a href="personal.html">
+                <img src="assets/img/profile.jpg" style="max-height:200px;"/>
+              </a></center>
+            </td>
+            <td><center>
+              <a href="personal.html">
+                <img src="assets/img/profile2.jpg" style="max-height:200px;"/>
+              </a></center>
+            </td>
+            <td><center>
+              <a href="personal.html">
+                <img src="assets/img/profile3.jpg" style="max-height:200px;"/>
+              </a></center>
+            </td>
+                </tr>
+              </table>
+            </div>
+            <div id="team" class="container">
+              <p>Total calories raised: 10</p>
+            </div>
+
+          </div>
+
+          <hr>
+
+          <div id="challenges">
+            <h2>Challenges</h2>
+            <table class="table">
+              <thead>
+                <th>Challenge</th>
+                <th>Reward</th>
+                <th>Completed?</th>
+                <th></th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Every member of the team runs 3 miles.</td>
+                  <td>1000 calories</td>
+                  <td>No</td>
+                  <td><button class="btn btn-success">Wager</button></td>
+                </tr>
+                <tr>
+                  <td>The team reaches all four corners of NYC.</td>
+                  <td>1200 calories</td>
+                  <td>Yes!</td>
+                  <td><button disabled class="btn">Wager</button></td>
+                </tr>
+                <tr>
+                  <td>Have everyone on the team present at a run, walk, or sporting event.</td>
+                  <td>500 calories</td>
+                  <td>Yes!</td>
+                  <td><button disabled class="btn">Wager</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <form></form>
+          </div>
+
+          <hr>
+
+          <div id="activity">
+            <h2>Activity Log</h2>
+            <p>This is where your teams activity log will be.</p>
+          </div>
+
+          <hr>
+
+          <div id="badges">
+            <h2>Badges and Accolades</h2>
+            <div class="row">
+              <img src="assets/img/badge1.png" title="saved the world" style="max-height:200px;"/>
+              <img src="assets/img/badge2.png" title="ran 100 miles" style="max-height:200px;"/>
+              <img src="assets/img/badge3.png" title="saved your first child" style="max-height:200px;"/>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
 

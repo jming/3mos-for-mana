@@ -14,8 +14,29 @@ db.open(function(err, db) {
 });
 
 //Search
-exports.joinGroup(req, res){
+exports.createGroup(req, res){
+	var id = req.params.myid;
+	var otherid = req.parems.personid;
+//	var people = db.people.find({'_id': { $in :[new BSON.ObjectID(myid), new BSON.ObjectID(otherid)]});
+	/*people.forEach(function(person){
+		people.add(person);
+	});*/
+	var group = {'people_list':[id,otherid], 'badge_list':[], 'pictures':[], 'calories':0};
+	db.collection('groups',function(err,collection){
+		if(err){ res.send(404);}
+		else{
+			collection.insert(group, {safe: true}, function(err, results){
+				if(err){ res.send(404);}
+				else{
+					result.send(results[0]);
+				}					
+			});
+		}
+	});
+}
 
+exports.joinGroup(req, res){
+	var id = req.parems.groupid;
 };
 
 exports.searchPeople(req, res){

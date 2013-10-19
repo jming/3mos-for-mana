@@ -143,6 +143,9 @@ exports.addPicture = function(req, res){
 	});
 }
 function convertBSON(idList){
+	if(idList == undefined || idList == []){
+		return [];
+	}
 	return idList.map(function(id){
 		return BSON.ObjectID(id);
 	});

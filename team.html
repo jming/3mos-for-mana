@@ -22,16 +22,13 @@
   <body>
 
     <div class="navbar navbar-inverse navbar-fixed-top">
-
       <div class="container">
         <div class="navbar-header">
-
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-
           <a class="navbar-brand" href="index.html">
             <img src="assets/img/logo.png" style="max-height:30px;">&nbsp
             3 Months for Mana
@@ -39,9 +36,9 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
-            <li class="dropdown">
+            <li class="active dropdown">
               <a href="profile.html" class="dropdown-toggle" data-toggle="dropdown">Profiles<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="personal.html">Personal</a></li>
@@ -52,62 +49,56 @@
           </ul>
           <form class="navbar-form navbar-right">
             <div class="form-group">
-              <input type="text" name="email" placeholder="Email" class="form-control">
+              <input type="text" placeholder="Email" class="form-control">
             </div>
             <div class="form-group">
-              <input type="password" name="pswd" placeholder="Password" class="form-control">
+              <input type="password" placeholder="Password" class="form-control">
             </div>
-            <button type="submit" onClick="check(this.form)" value="Login" class="btn btn-success">Sign in</button>
-          	<script language="javascript">
-			  function check(form) {
-			    if(form.email.value == form.pswd.value && form.email.value != "") {
-			      window.open('profile.html');
-			    } else {
-			      alert("Error wrong email or password")
-			    }
-			  }
-			</script>
-		  </form>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
         </div><!--/.navbar-collapse -->
       </div>
     </div>
-	
+
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
+
+    <div class="container">
+      <br>
+      <h1>Profile for Jonathon</h1>
+      <div class="row">
         <div class="col-lg-4">
-          <br>
-          <img src="assets/img/baby.jpg"/>
+          <center><img src="assets/img/profile.jpg" style="max-height:200px;"/></center>
         </div>
         <div class="col-lg-8">
-          <h1>Hunger kills 3x as many children as TB, malaria, and AIDS combined.</h1>
-          <p>But the good news is that with the new <b>3 Months for Mana</b> program, you can donate life-saving, ready-to-use therapeutic foods while getting in shape.</p>
-          <p><a href="about.html" class="btn btn-primary btn-large">Find out how &raquo;</a></p>
+          <table class="table">
+            <tr>
+              <td><b>Name</b></td>
+              <td>Jonathon Blonchek</td>
+            </tr>
+            <tr>
+              <td><b>Age</b></td>
+              <td>22</td>
+            </tr>
+            <tr>
+              <td><b>Weight</b></td>
+              <td>170 lbs</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-lg-2">
-          <img src="assets/img/baby2.jpg" style="width:160px; height:160px;">
-        </div>
-        <div class="col-lg-4">
-          <h2>Convert your calories.</h2>
-          <p>Connect your RunKeeper account and join a team to start making your workouts count.</p>
-          <p><a class="btn btn-success" href="create.html">Create an account &raquo;</a></p>
-        </div>
-        <div class="col-lg-2">
-          <img src="assets/img/baby3.jpg" style="width:160px; height:160px;">
-        </div>
-        <div class="col-lg-4">
-          <h2>See how others are doing.</h2>
-          <p>Compare your team's calories lost and badges earned to other teams all competing across your company.</p>
-          <p><a class="btn btn-success" href="boards.html">View leader boards &raquo;</a></p>
-       </div>
-      </div>
+    <div id="personal" class="container">
+      <h2>Personal Activity Log</h2>
+      <p>This is where your personal activity log will be.</p>
+    </div>
 
+    <div id="team" class="container">
+      <h2>Team Activity Log</h2>
+      <p>This is where your teams activity log will be.</p>
+    </div>
+
+    <div class="container">
       <hr>
 
       <footer>

@@ -22,7 +22,8 @@ app.all('*', function(req, res, next) {
 });
 
 //Search
-app.post('/joingroup',mana.joinGroup);
+app.post('/creategroup/:myid/:personid',mana.createGroup);
+app.post('/joingroup/:myid/:groupid',mana.joinGroup);
 app.options('/searchpeople',sendSuccess);
 app.get('/searchpeople', mana.searchPeople); 
 //Person

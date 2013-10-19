@@ -594,14 +594,17 @@ Barchart.prototype.display_time = function(i){
       
       <h1>Corporate Leaderboards</h1>
       <img src="assets/img/company.jpg" style="max-height:200px;"/>
+
+      <hr>
+
       <div class="row">
       <!-- <div class="container"> -->
         <div class="col-md-3">
           <ul class="nav">
-            <li><a href="#challenge">Challenge</a></li>
-            <li><a href="#rankings">Rankings</a></li>
-            <li><a href="#teamstats">Teams</a></li>
-            <li><a href="#events">Events</a></li>
+            <li><a href="#challenge">Challenge Stats</a></li>
+            <li><a href="#rankings">Current Rankings</a></li>
+            <li><a href="#teamstats">Teams Stats</a></li>
+            <li><a href="#events">Events Timeline</a></li>
           </ul>
         </div>
       <!-- </div> -->
@@ -609,35 +612,41 @@ Barchart.prototype.display_time = function(i){
       <!-- <div class="container"> -->
 
         <div class="col-md-9">
+
           <div id="challenge">
             <h2>Challenge Stats</h2>
             <p>Days left: 36</p>
             <p>Teams competing: 24</p>
             <p>Cumulative calories: </p>
           </div>
+
+          <hr>
+          
           <div id="rankings"></div>
-          <div>
             <div>
-              <h2>Current Rankings</h2>
-              <table class="table">
-                <tr>
-                  <td><b>Team</b></td>
-                  <td><b>Lives saved</b></td>
-                  <td><b>Other</b></td>
-                </tr>
-                <tr>
-                  <td><a href="team.html">Mana Madness</a></td>
-                  <td>22</td>
-                  <td>N/A</td>
+              <div>
+                <h2>Current Rankings</h2>
+                <table class="table">
+                  <tr>
+                    <td><b>Team</b></td>
+                    <td><b>Lives saved</b></td>
+                    <td><b>Other</b></td>
                   </tr>
-                <tr>
-                  <td><a href="team.html">Manaics!</a></td>
-                  <td>9</td>
-                  <td>N/A</td>
-                </tr>
-              </table>
+                  <tr>
+                    <td><a href="team.html">Mana Madness</a></td>
+                    <td>22</td>
+                    <td>N/A</td>
+                    </tr>
+                  <tr>
+                    <td><a href="team.html">Manaics!</a></td>
+                    <td>9</td>
+                    <td>N/A</td>
+                  </tr>
+                </table>
+              </div>
             </div>
-          </div>
+
+          <hr>
 
           <div id="teamstats">
             <h2>Team Stats</h2>
@@ -647,6 +656,8 @@ Barchart.prototype.display_time = function(i){
               <div id="chart" style="width:75%; float:left"></div>
             </div>
           </div>
+
+          <hr>
 
           <div id="events">
             <h2>Events Timeline</h2>

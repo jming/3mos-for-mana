@@ -29,13 +29,13 @@ var mongoUri = process.env.MONGOLAB_URI ||
   'mongodb://localhost/27017';
 
 mongo.Db.connect(mongoUri, function (err, db) {
-  //db.collection('people', function(er, collection) {
-   // collection.insert({'group_id': 11}, {safe: true}, function(er,rs) {
-    //	if(!err){
-    //		console.log("DID INSERT");
-    //	}
-    //});
-  //});
+  db.collection('people', function(er, collection) {
+    collection.insert({'group_id': 11}, {safe: true}, function(er,rs) {
+   		if(!err){
+    		console.log("DID INSERT");
+    	}
+    });
+  });
 });
 
 //Search
@@ -80,7 +80,7 @@ exports.joinGroup= function(req, res){
 
 exports.searchPeople= function(req, res){
 	console.log("search people");
-	db.collection('people', function(err, collection){
+	/*db.collection('people', function(err, collection){
 		if(err){ console.log("ERROR"); res.send(404); }
 		else{
 			console.log("people");
@@ -88,7 +88,7 @@ exports.searchPeople= function(req, res){
 				res.send(people);
 			});
 		}
-	});
+	});*/
 }
 
 //Person

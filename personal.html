@@ -18,7 +18,6 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,400italic' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script>
-<<<<<<< HEAD
     $.get( 
       "http://localhost:1337/getinformation/52625f659d5dd98a571d112f", 
       function( data ) {
@@ -39,19 +38,6 @@
         });*/
       }
     );
-=======
-    $.get( "http://localhost:1337/getinformation/52625f659d5dd98a571d112f", function( data ) {
-      //$( ".result" ).html( data );
-      console.log(data);
-      $("#age").text(data.age);
-      /*$.get( "http://localhost:1337/getgroupinfo/" + data.group_id, function( data ) {
-      //$( ".result" ).html( data );
-        alert(data.);
-        alert( "Load was performed." );
-
-      });*/
-    });
->>>>>>> b8d1bae1b3c5cd648c94b71411aaace1ae8f8d4a
     </script>
   </head>
 
@@ -102,63 +88,87 @@
       <br>
       <h1>Profile for Jonathon</h1>
       <div class="row">
-        <div class="col-lg-4">
-          <center><img src="assets/img/profile.jpg" style="max-height:300px;"/></center>
-        </div>
-        <div class="col-lg-8" id="enter_info">
-          <table class="table">
-            <tr>
-              <td><b>Name</b></td>
-              <td id="name">Jonathon Blonchek</td>
-            </tr>
-		        <tr>
-              <td><b>Team</b></td>
-              <td id="team"><a href="team.html">Mana Madness</a></td>
-            </tr>
-            <tr>
-              <td><b>Age</b></td>
-              <td id="age">22</td>
-            </tr>
-            <tr>
-              <td><b>Weight</b></td>
-              <td id="weight">170 lbs</td>
-            </tr>
-			      <tr>
-              <td><b>Lives saved</b></td>
-              <td id="lives_saved">70</td>
-            </tr>
-			      <tr>
-              <td><b>Calories donated</b></td>
-              <td id="calories">3500</td>
-            </tr>
-			      <tr>
-              <td><b>Longest run</b></td>
-              <td id="longest_run">12 miles</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
 
-    <div id="personal" class="container">
-      <h2>Personal Activity Log</h2>
-      <p>I really like running. It has been a lot of fun. This week I ran 12 miles total. Next week I will try to run even more miles.</p>
-    </div>
-	
-	<div id="personal" class="container">
-      <h2>Events participated in</h2>
-      <h4><b>Relay for life</b></h4>
-	  <p>All night race to money for cancer research.</p>
-	  <h4><b>Bank of America run through the city</b></h4>
-	  <p>Marathon race to benefit local charities.</p>
-    </div>
-	
-	<div id="personal" class="container">
-      <h2>Badges and Accolades</h2>
-	  <div class="row">
-        <img src="assets/img/badge1.png" title="saved the world" style="max-height:200px;"/>
-        <img src="assets/img/badge2.png" title="ran 100 miles" style="max-height:200px;"/>
-        <img src="assets/img/badge3.png" title="saved your first child" style="max-height:200px;"/>
+        <div class="col-md-3">
+          <ul class="nav">
+            <li><a href="#info">Info</a></li>
+            <li><a href="#log">Activity Log</a></li>
+            <li><a href="#event">Events</a></li>
+            <li><a href="#badges">Badges</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <div id="info">
+            <h2>Info</h2>
+            <div>
+              <img src="assets/img/profile.jpg" style="max-height:300px;"/>
+            </div>
+            <div id="enter_info">
+              <table class="table">
+                <tr>
+                  <td><b>Name</b></td>
+                  <td id="name">Jonathon Blonchek</td>
+                </tr>
+                <tr>
+                  <td><b>Team</b></td>
+                  <td id="team"><a href="team.html">Mana Madness</a></td>
+                </tr>
+                <tr>
+                  <td><b>Age</b></td>
+                  <td id="age">22</td>
+                </tr>
+                <tr>
+                  <td><b>Weight</b></td>
+                  <td id="weight">170 lbs</td>
+                </tr>
+                <tr>
+                  <td><b>Lives saved</b></td>
+                  <td id="lives_saved">70</td>
+                </tr>
+                <tr>
+                  <td><b>Calories donated</b></td>
+                  <td id="calories">3500</td>
+                </tr>
+                <tr>
+                  <td><b>Longest run</b></td>
+                  <td id="longest_run">12 miles</td>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+
+          <div id="log">
+            <h2>Activity Log</h2>
+            <p>I really like running. It has been a lot of fun. This week I ran 12 miles total. Next week I will try to run even more miles.</p>
+          </div>
+
+          <div id="event">
+            <h2>Events</h2>
+            <ul>
+              <li>
+                <h4><b>Relay for life</b></h4>
+                <p>All night race to money for cancer research.</p>
+              </li>
+              <li>
+                <h4><b>Bank of America run through the city</b></h4>
+            <p>Marathon race to benefit local charities.</p>
+              </li>
+            </ul>
+          </div>
+
+          <div id="badges">
+            <h2>Badges and Accolades</h2>
+            <div class="row">
+              <img src="assets/img/badge1.png" title="saved the world" style="max-height:200px;"/>
+              <img src="assets/img/badge2.png" title="ran 100 miles" style="max-height:200px;"/>
+              <img src="assets/img/badge3.png" title="saved your first child" style="max-height:200px;"/>
+            </div>
+          </div>
+        </div>
+
+        
       </div>
     </div>
 

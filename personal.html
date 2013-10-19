@@ -16,11 +16,25 @@
     <!-- Custom styles for this template -->
     <link href="assets/css/jumbotron.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,400italic' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>
+    $.get( "http://localhost:1337/getinformation/52625f659d5dd98a571d112f", function( data ) {
+      //$( ".result" ).html( data );
+      console.log(data);
+      alert( "Load was performed." );
+      $("#age").text(data.age);
+      /*$.get( "http://localhost:1337/getgroupinfo/" + data.group_id, function( data ) {
+      //$( ".result" ).html( data );
+        alert(data.);
+        alert( "Load was performed." );
 
+      });*/
+    });
+    </script>
   </head>
 
   <body>
-
+    <div class="here"></div>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -69,7 +83,7 @@
         <div class="col-lg-4">
           <center><img src="assets/img/profile.jpg" style="max-height:200px;"/></center>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8" id="enter_info">
           <table class="table">
             <tr>
               <td><b>Name</b></td>
@@ -81,7 +95,7 @@
             </tr>
             <tr>
               <td><b>Age</b></td>
-              <td>22</td>
+              <td id="age">22</td>
             </tr>
             <tr>
               <td><b>Weight</b></td>

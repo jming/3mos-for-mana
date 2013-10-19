@@ -37,6 +37,18 @@ exports.createGroup(req, res){
 
 exports.joinGroup(req, res){
 	var id = req.parems.groupid;
+	var groupid = req.parems.groupid;
+	db.collection('groups', function(err,collection){
+		if(err){ res.send(404);}
+		else{
+			collection.update({"_id": new BSON.ObjectID(groupid)},{$push: {'people_list': id}}, {safe:true}, function(err, results){
+				if(err){ res.send(404);}
+				else{
+					result.send(results[0]);
+				}
+			});
+		}
+	});
 };
 
 exports.searchPeople(req, res){

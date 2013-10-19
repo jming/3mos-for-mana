@@ -79,9 +79,11 @@ exports.joinGroup= function(req, res){
 };
 
 exports.searchPeople= function(req, res){
+	console.log("search people");
 	db.collection('people', function(err, collection){
 		if(err){ console.log("ERROR"); res.send(404); }
 		else{
+			console.log("people");
 			collection.find({}).sort({group_id:-1}).toArray(function(err,people){
 				res.send(people);
 			});

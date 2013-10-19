@@ -43,13 +43,5 @@ app.get('/getmembers/:groupID',  mana.getMembers);
 app.options('/getgroups',sendSuccess);
 app.get('/getgroups',  mana.getGroups); 
 
-app.options('/items', sendSuccess);
-app.get('/items', items.findAll);
-app.options('/item/:id', sendSuccess);
-app.get('/item/:id', items.findById);
-app.post('/items', items.addItem);
-app.options('/user/:id', sendSuccess);
-app.get('/user/:id', items.getProfile);
-
 app.listen(1337);
 console.log('Listening on port 1337...');

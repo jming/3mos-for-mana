@@ -1,14 +1,14 @@
-/*var mongo = require('mongodb');
+var mongo = require('mongodb');
  
 var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
-var mongoUri =  process.env.MONGOLAB_URI || 'mongodb://localhost/27017';
+//var mongoUri =  process.env.MONGOLAB_URI || 'mongodb://localhost/27017';
 
  
 var server = new Server('localhost', 27017, {auto_reconnect: true, safe:false});
-db = new Db('jpmorgan', server);*/
+db = new Db('test', server);
 
 /*mongo.Db.connect(mongoUri, function (err, db) {
     if(!err) {
@@ -16,19 +16,19 @@ db = new Db('jpmorgan', server);*/
     }
 });*/
  
-/*db.open(function(err, db) {
+db.open(function(err, db) {
     if(!err) {
         console.log("Connected to 'jpmorgan' database");
     }
-});*/
+});
 
-var mongo = require('mongodb');
+/*var mongo = require('mongodb');
 
 var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
-  'mongodb://localhost/27017';
+  'mongodb://localhost/27017'; */
 
-mongo.Db.connect(mongoUri, function (err, db) {
+/*mongo.Db.connect(mongoUri, function (err, db) {
   db.collection('people', function(er, collection) {
     collection.insert({'group_id': 11}, {safe: true}, function(er,rs) {
    		if(!err){
@@ -40,18 +40,20 @@ mongo.Db.connect(mongoUri, function (err, db) {
   });
   console.log("DID INSERT3");
 });
-console.log("DID INSERT4");
+console.log("DID INSERT4");*/
 
 //Search
 exports.createGroup = function(req, res){
 	var id = req.params.myid;
 	var otherid = req.params.personid;
 	var group = {'people_list':[id,otherid], 'badge_list':[], 'pictures':[], 'calories':0};
+	console.log("before groups");
 	db.collection('groups',function(err,collection){
-		if(err){ res.send(404);}
+		console.log("after groups");
+		if(err){ console.log("yo"); res.send(404);}
 		else{
 			collection.insert(group, {safe: true}, function(err, results){
-				if(err){ res.send(404);}
+				if(err){ console.log("404"); res.send(404);}
 				else{
 					db.collection('people').update({'_id':new BSON.ObjectID(id)},{$set:
 					{'in_group': 1, 'group_id': results[0]._id.toString()}});
@@ -83,8 +85,8 @@ exports.joinGroup= function(req, res){
 };
 
 exports.searchPeople= function(req, res){
-	console.log("search people");
-	/*db.collection('people', function(err, collection){
+	//console.log("search people");
+	db.collection('people', function(err, collection){
 		if(err){ console.log("ERROR"); res.send(404); }
 		else{
 			console.log("people");
@@ -92,12 +94,13 @@ exports.searchPeople= function(req, res){
 				res.send(people);
 			});
 		}
-	});*/
+	});
 }
 
 //Person
 exports.getPersonInfo= function(req, res){
 	var id= req.params.personid;
+	console.log(id);
 	db.collection('people', function(err,collection){
 		if(err){ res.send(404);}
 		else{

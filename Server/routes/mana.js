@@ -28,14 +28,14 @@ var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
   'mongodb://localhost/27017';
 
-var db = mongo.Db.connect(mongoUri, function (err, db) {
-  db.collection('people', function(er, collection) {
-    collection.insert({'group_id': 11}, {safe: true}, function(er,rs) {
-    	if(!err){
-    		console.log("DID INSERT");
-    	}
-    });
-  });
+mongo.Db.connect(mongoUri, function (err, db) {
+  //db.collection('people', function(er, collection) {
+   // collection.insert({'group_id': 11}, {safe: true}, function(er,rs) {
+    //	if(!err){
+    //		console.log("DID INSERT");
+    //	}
+    //});
+  //});
 });
 
 //Search

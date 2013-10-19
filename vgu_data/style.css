@@ -1,0 +1,38 @@
+.border_box {
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+  /* Opera/IE 8+ */
+
+}
+#debug {
+  margin: 0px 20px;
+}
+#plot {
+  margin: 0px auto;
+  padding: 20px;
+}
+svg {
+  margin: 0px 0px 10px;
+}
+svg:last-of-type {
+  margin: 0px;
+}
+text {
+  fill: black;
+  stroke: none;
+  opacity: 0.5;
+  font-family: Monaco, Arial, monospace;
+  font-size: 8pt;
+}
+.brush, .pie {
+  fill: #AAA;
+  fill-opacity: 0.3;
+  stroke: black;
+  stroke-width: 1px;
+  stroke-opacity: 0.3;
+}

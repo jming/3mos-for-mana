@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+/* CSS goes here. */
+.africa { fill: #dcd; }
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script>
+
+var width = 960,
+    height = 1160;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+// remember this is an async call
+d3.json("ken_tza.json", function(error, data) {
+    var subunits = topojson.feature(data, data.objects.subunits);
+    var projection = d3.geo.mercator()
+        .scale(500)
+        .translate([width / 2, height / 2]);
+    var path = d3.geo.path()
+        .projection(projection);
+    svg.append("path")
+        .attr("class", "africa")
+        .datum(subunits)
+        .attr("d", path);
+    svg.append("image")
+      .attr("xlink:href", "https://github.com/favicon.ico")
+      .attr("x", -8)
+      .attr("y", -8)
+      .attr("width", 16)
+      .attr("height", 16);
+});
+
+</script>

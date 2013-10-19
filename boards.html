@@ -17,6 +17,23 @@
     <link href="assets/css/jumbotron.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,400italic' rel='stylesheet' type='text/css'>
 
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <!-- BEGIN TimelineJS -->
+    <script type="text/javascript" src="assets/js/storyjs-embed.js"></script>
+    <script>
+        $(document).ready(function() {
+            createStoryJS({
+                type:       'timeline',
+                width:      '800',
+                height:     '600',
+                source:     'example.json',
+                embed_id:   'my-timeline'
+            });
+        });
+    </script>
+    <!-- END TimelineJS -->
+
   </head>
 
   <body>
@@ -42,7 +59,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profiles<b class="caret"></b></a>
+              <a href="profile.html" class="dropdown-toggle" data-toggle="dropdown">Profiles<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="profile.html#personal">Personal</a></li>
                 <li><a href="profile.html#team">Team</a></li>
@@ -65,7 +82,7 @@
 
     <div class="container">
       <br>
-      <h1>Leaderboards</h1>
+      <h1>Corporate Leaderboards</h1>
 	  <div class="col-lg-8">
         <img src="assets/img/company.jpg" style="max-height:200px;"/>
       </div>
@@ -96,6 +113,9 @@
       </div>
     </div>
 
+    <div id="my-timeline" class="container">
+    </div>
+
     <div class="container">
       <hr>
 
@@ -108,18 +128,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap-transition.js"></script>
-    <script src="assets/js/bootstrap-alert.js"></script>
-    <script src="assets/js/bootstrap-modal.js"></script>
-    <script src="assets/js/bootstrap-dropdown.js"></script>
-    <script src="assets/js/bootstrap-scrollspy.js"></script>
-    <script src="assets/js/bootstrap-tab.js"></script>
-    <script src="assets/js/bootstrap-tooltip.js"></script>
-    <script src="assets/js/bootstrap-popover.js"></script>
-    <script src="assets/js/bootstrap-button.js"></script>
-    <script src="assets/js/bootstrap-collapse.js"></script>
-    <script src="assets/js/bootstrap-carousel.js"></script>
-    <script src="assets/js/bootstrap-typeahead.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
 
   </body>
 </html>

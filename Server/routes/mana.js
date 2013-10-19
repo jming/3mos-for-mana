@@ -5,12 +5,13 @@ var Server = mongo.Server,
     BSON = mongo.BSONPure;
 
 var mongoUri =  process.env.MONGOLAB_URI || 'mongodb://localhost/27017';
+console.log(process.env.MONGOLAB_URI);
 
  
 //var server = new Server('localhost', 27017, {auto_reconnect: true, safe:false});
 //db = new Db('jpmorgan', server);
 
-mongo.Db.connect(mongoUri, function (err, db) {
+Db.connect(mongoUri, function (err, db) {
     if(!err) {
         console.log("Connected to 'jpmorgan' database");
     }

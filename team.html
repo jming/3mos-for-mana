@@ -17,38 +17,18 @@
     <link href="assets/css/jumbotron.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,400italic' rel='stylesheet' type='text/css'>
 
-    <!-- jQuery -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <!-- BEGIN TimelineJS -->
-    <script type="text/javascript" src="assets/js/storyjs-embed.js"></script>
-    <script>
-        $(document).ready(function() {
-            createStoryJS({
-                type:       'timeline',
-                width:      '800',
-                height:     '600',
-                source:     'example.json',
-                embed_id:   'my-timeline'
-            });
-        });
-    </script>
-    <!-- END TimelineJS -->
-
   </head>
 
   <body>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-
           <a class="navbar-brand" href="index.html">
             <img src="assets/img/logo.png" style="max-height:30px;">&nbsp
             3 Months for Mana
@@ -58,14 +38,14 @@
           <ul class="nav navbar-nav">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
-            <li class="dropdown">
+            <li class="active dropdown">
               <a href="profile.html" class="dropdown-toggle" data-toggle="dropdown">Profiles<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="personal.html">Personal</a></li>
                 <li><a href="team.html">Team</a></li>
               </ul>
             </li>
-            <li class="active"><a href="boards.html">Results</a></li>
+            <li><a href="boards.html">Results</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <div class="form-group">
@@ -80,40 +60,42 @@
       </div>
     </div>
 
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+
     <div class="container">
       <br>
-      <h1>Corporate Leaderboards</h1>
-	  <div class="col-lg-8">
-        <img src="assets/img/company.jpg" style="max-height:200px;"/>
-      </div>
+      <h1>Profile for Jonathon</h1>
       <div class="row">
-	  <div id="personal" class="container">
-        <h2>Days left: 36</h2>
-		<br>
-      </div>
+        <div class="col-lg-4">
+          <center><img src="assets/img/profile.jpg" style="max-height:200px;"/></center>
+        </div>
         <div class="col-lg-8">
           <table class="table">
             <tr>
-              <td><b>Team</b></td>
-			  <td><b>Lives saved</b></td>
-			  <td><b>Other stuff</b></td>
+              <td><b>Name</b></td>
+              <td>Jonathon Blonchek</td>
             </tr>
             <tr>
-              <td>Best team</td>
+              <td><b>Age</b></td>
               <td>22</td>
-			  <td>nothing</td>
             </tr>
-			<tr>
-              <td>second best team</td>
-              <td>9</td>
-			  <td>something</td>
+            <tr>
+              <td><b>Weight</b></td>
+              <td>170 lbs</td>
             </tr>
           </table>
         </div>
       </div>
     </div>
 
-    <div id="my-timeline" class="container">
+    <div id="personal" class="container">
+      <h2>Personal Activity Log</h2>
+      <p>This is where your personal activity log will be.</p>
+    </div>
+
+    <div id="team" class="container">
+      <h2>Team Activity Log</h2>
+      <p>This is where your teams activity log will be.</p>
     </div>
 
     <div class="container">
@@ -124,11 +106,11 @@
       </footer>
     </div> <!-- /container -->
 
-    <!-- Le javascript
+
+    <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.js"></script>
     <script src="dist/js/bootstrap.min.js"></script>
-
   </body>
 </html>

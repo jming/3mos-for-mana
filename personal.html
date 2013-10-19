@@ -21,7 +21,6 @@
     $.get( "http://localhost:1337/getinformation/52625f659d5dd98a571d112f", function( data ) {
       //$( ".result" ).html( data );
       console.log(data);
-      alert( "Load was performed." );
       $("#age").text(data.age);
       /*$.get( "http://localhost:1337/getgroupinfo/" + data.group_id, function( data ) {
       //$( ".result" ).html( data );

@@ -1,4 +1,4 @@
-var = require('express'), mana = require('./routes/mana');
+var express= require('express'), mana = require('./routes/mana');
  
 var app = express();
 

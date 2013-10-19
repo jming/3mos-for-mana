@@ -3,9 +3,18 @@ var mongo = require('mongodb');
 var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
+
+var mongoUri =  process.env.MONGOLAB_URI || 'mongodb://localhost/27017';
+
  
 var server = new Server('localhost', 27017, {auto_reconnect: true, safe:false});
 db = new Db('jpmorgan', server);
+
+/*mongo.Db.connect(mongoUri, function (err, db) {
+    if(!err) {
+        console.log("Connected to 'jpmorgan' database");
+    }
+});*/
  
 db.open(function(err, db) {
     if(!err) {

@@ -1,27 +1,42 @@
-var mongo = require('mongodb');
+/*var mongo = require('mongodb');
  
 var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
 var mongoUri =  process.env.MONGOLAB_URI || 'mongodb://localhost/27017';
-console.log(process.env.MONGOLAB_URI);
 
  
-//var server = new Server('localhost', 27017, {auto_reconnect: true, safe:false});
-//db = new Db('jpmorgan', server);
+var server = new Server('localhost', 27017, {auto_reconnect: true, safe:false});
+db = new Db('jpmorgan', server);*/
 
-Db.connect(mongoUri, function (err, db) {
+/*mongo.Db.connect(mongoUri, function (err, db) {
     if(!err) {
         console.log("Connected to 'jpmorgan' database");
     }
-});
+});*/
  
 /*db.open(function(err, db) {
     if(!err) {
         console.log("Connected to 'jpmorgan' database");
     }
 });*/
+
+var mongo = require('mongodb');
+
+var mongoUri = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/27017';
+
+mongo.Db.connect(mongoUri, function (err, db) {
+  db.collection('people', function(er, collection) {
+    collection.insert({'group_id': 11}, {safe: true}, function(er,rs) {
+    	if(!err){
+    		console.log("DID INSERT");
+    	}
+    });
+  });
+});
 
 //Search
 exports.createGroup = function(req, res){

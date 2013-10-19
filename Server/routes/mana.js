@@ -24,6 +24,10 @@ exports.createGroup = function(req, res){
 			collection.insert(group, {safe: true}, function(err, results){
 				if(err){ res.send(404);}
 				else{
+					db.collection('people').update({'_id':new BSON.ObjectID(id)},{$set:
+					{'in_group': 1, 'group_id': results[0]._id.toString()}});
+					db.collection('people').update({'_id':new BSON.ObjectID(otherid)},{$set:
+					{'in_group': 1, 'group_id': results[0]._id.toString()}});
 					res.send(results[0]);
 				}					
 			});
@@ -40,6 +44,8 @@ exports.joinGroup= function(req, res){
 			collection.update({"_id": new BSON.ObjectID(groupid)},{$push: {'people_list': id}}, {safe:true}, function(err, results){
 				if(err){ res.send(404);}
 				else{
+					db.collection('people').update({'_id':new BSON.ObjectID(id)},{$set:
+					{'in_group': 1, 'group_id': groupid}});
 					res.send(200);
 				}
 			});

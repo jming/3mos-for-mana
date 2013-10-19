@@ -8,7 +8,7 @@ var Server = mongo.Server,
 
  
 var server = new Server('localhost', 27017, {auto_reconnect: true, safe:false});
-db = new Db('test', server);
+db = new Db('jpmorgan', server);
 
 /*mongo.Db.connect(mongoUri, function (err, db) {
     if(!err) {
@@ -22,26 +22,6 @@ db.open(function(err, db) {
     }
 });
 
-/*var mongo = require('mongodb');
-
-var mongoUri = process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL ||
-  'mongodb://localhost/27017'; */
-
-/*mongo.Db.connect(mongoUri, function (err, db) {
-  db.collection('people', function(er, collection) {
-    collection.insert({'group_id': 11}, {safe: true}, function(er,rs) {
-   		if(!err){
-    		console.log("DID INSERT");
-    	}
-    	console.log("DID INSERT1");
-    });
-    console.log("DID INSERT2");
-  });
-  console.log("DID INSERT3");
-});
-console.log("DID INSERT4");*/
-
 //Search
 exports.createGroup = function(req, res){
 	var id = req.params.myid;
@@ -50,10 +30,10 @@ exports.createGroup = function(req, res){
 	console.log("before groups");
 	db.collection('groups',function(err,collection){
 		console.log("after groups");
-		if(err){ console.log("yo"); res.send(404);}
+		if(err){res.send(404);}
 		else{
 			collection.insert(group, {safe: true}, function(err, results){
-				if(err){ console.log("404"); res.send(404);}
+				if(err){ res.send(404);}
 				else{
 					db.collection('people').update({'_id':new BSON.ObjectID(id)},{$set:
 					{'in_group': 1, 'group_id': results[0]._id.toString()}});
@@ -85,7 +65,6 @@ exports.joinGroup= function(req, res){
 };
 
 exports.searchPeople= function(req, res){
-	//console.log("search people");
 	db.collection('people', function(err, collection){
 		if(err){ console.log("ERROR"); res.send(404); }
 		else{
@@ -100,7 +79,6 @@ exports.searchPeople= function(req, res){
 //Person
 exports.getPersonInfo= function(req, res){
 	var id= req.params.personid;
-	console.log(id);
 	db.collection('people', function(err,collection){
 		if(err){ res.send(404);}
 		else{

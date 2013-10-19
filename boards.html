@@ -38,7 +38,7 @@
 
   <body>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
 
       <div class="container">
         <div class="navbar-header">
@@ -83,45 +83,76 @@
     <div class="container">
       <br>
       <h1>Corporate Leaderboards</h1>
-	  <div class="col-lg-8">
-        <img src="assets/img/company.jpg" style="max-height:200px;"/>
-      </div>
+      <img src="assets/img/company.jpg" style="max-height:200px;"/><br>
+
       <div class="row">
-	  <div id="personal" class="container">
-        <h2>Days left: 36</h2>
-		<br>
-      </div>
-        <div class="col-lg-8">
-          <table class="table">
-            <tr>
-              <td><b>Team</b></td>
-			  <td><b>Lives saved</b></td>
-			  <td><b>Other stuff</b></td>
-            </tr>
-            <tr>
-              <td>Best team</td>
-              <td>22</td>
-			  <td>nothing</td>
-            </tr>
-			<tr>
-              <td>second best team</td>
-              <td>9</td>
-			  <td>something</td>
-            </tr>
-          </table>
+      <!-- <div class="container"> -->
+        <div class="col-md-3">
+          <ul class="nav">
+            <li><a href="#challenge">Challenge</a></li>
+            <li><a href="#rankings">Rankings</a></li>
+            <li><a href="#teamstats">Teams</a></li>
+            <li><a href="#events">Events</a></li>
+          </ul>
         </div>
+      <!-- </div> -->
+
+      <!-- <div class="container"> -->
+
+        <div class="col-md-9">
+
+          <div id="challenge">
+            <h2>Challenge Stats</h2>
+            <p>Days left: 36</p>
+            <p>Teams competing: 24</p>
+            <p>Cumulative calories: </p>
+          </div>
+
+          <div id="rankings">
+            <h2>Current Rankings</h2>
+            <div>
+              <table class="table">
+                <tr>
+                  <td><b>Team</b></td>
+                  <td><b>Lives saved</b></td>
+                  <td><b>Other stuff</b></td>
+                </tr>
+                <tr>
+                  <td>Best team</td>
+                  <td>22</td>
+                  <td>nothing</td>
+                  </tr>
+                <tr>
+                  <td>second best team</td>
+                  <td>9</td>
+                  <td>something</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div id="teamstats">
+          </div>
+
+          <div id="events">
+            <h2>Timeline</h2>
+            <div class="container">
+              <div id="my-timeline">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
       </div>
-    </div>
 
-    <div id="my-timeline" class="container">
-    </div>
+      <div class="container">
+        <hr>
 
-    <div class="container">
-      <hr>
-
-      <footer>
-        <p>&copy; Company 2013</p>
-      </footer>
+        <footer>
+          <p>&copy; Company 2013</p>
+        </footer>
+      </div>
     </div> <!-- /container -->
 
     <!-- Le javascript

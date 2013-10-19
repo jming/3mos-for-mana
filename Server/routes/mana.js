@@ -5,7 +5,7 @@ var Server = mongo.Server,
     BSON = mongo.BSONPure;
  
 var server = new Server('localhost', 27017, {auto_reconnect: true, safe:false});
-db = new Db('trackerdb', server);
+db = new Db('jpmorgan', server);
  
 db.open(function(err, db) {
     if(!err) {
@@ -14,13 +14,9 @@ db.open(function(err, db) {
 });
 
 //Search
-exports.createGroup(req, res){
+exports.createGroup = function(req, res){
 	var id = req.params.myid;
-	var otherid = req.parems.personid;
-//	var people = db.people.find({'_id': { $in :[new BSON.ObjectID(myid), new BSON.ObjectID(otherid)]});
-	/*people.forEach(function(person){
-		people.add(person);
-	});*/
+	var otherid = req.params.personid;
 	var group = {'people_list':[id,otherid], 'badge_list':[], 'pictures':[], 'calories':0};
 	db.collection('groups',function(err,collection){
 		if(err){ res.send(404);}
@@ -28,48 +24,60 @@ exports.createGroup(req, res){
 			collection.insert(group, {safe: true}, function(err, results){
 				if(err){ res.send(404);}
 				else{
-					result.send(results[0]);
+					res.send(results[0]);
 				}					
 			});
 		}
 	});
 }
 
-exports.joinGroup(req, res){
-	var id = req.parems.groupid;
+exports.joinGroup= function(req, res){
+	var id = req.params.myid;
+	var groupid = req.params.groupid;
+	db.collection('groups', function(err,collection){
+		if(err){ res.send(404);}
+		else{
+			collection.update({"_id": new BSON.ObjectID(groupid)},{$push: {'people_list': id}}, {safe:true}, function(err, results){
+				if(err){ res.send(404);}
+				else{
+					res.send(200);
+				}
+			});
+		}
+	});
 };
 
-exports.searchPeople(req, res){
+exports.searchPeople= function(req, res){
 
 }
 
 //Person
-exports.getPersonInfo(req, res){
+exports.getPersonInfo= function(req, res){
 
 }
 
 //Group
-exports.getFeed(req, res){
+exports.getFeed= function(req, res){
 
 }
 
-exports.getBadges(req, res){
+exports.getBadges= function(req, res){
 
 }
 
-exports.getPictures(req, res){
+exports.getPictures= function(req, res){
 
 }
 
-exports.getCalories(req, res){
+exports.getCalories= function(req, res){
 
 }
 
-exports.getMembers(req, res){
+exports.getMembers= function(req, res){
 
 }
 
 //Corporation
-exports.getGroups(req, res){
+exports.getGroups= function(req, res){
 
 }

@@ -7,20 +7,20 @@ var Server = mongo.Server,
 var mongoUri =  process.env.MONGOLAB_URI || 'mongodb://localhost/27017';
 
  
-//var server = new Server('localhost', 27017, {auto_reconnect: true, safe:false});
-//db = new Db('jpmorgan', server);
+var server = new Server('localhost', 27017, {auto_reconnect: true, safe:false});
+db = new Db('jpmorgan', server);
 
-mongo.Db.connect(mongoUri, function (err, db) {
-    if(!err) {
-        console.log("Connected to 'jpmorgan' database");
-    }
-});
- 
-/*db.open(function(err, db) {
+/*mongo.Db.connect(mongoUri, function (err, db) {
     if(!err) {
         console.log("Connected to 'jpmorgan' database");
     }
 });*/
+ 
+db.open(function(err, db) {
+    if(!err) {
+        console.log("Connected to 'jpmorgan' database");
+    }
+});
 
 //Search
 exports.createGroup = function(req, res){

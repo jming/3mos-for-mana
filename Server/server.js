@@ -27,19 +27,16 @@ app.post('/joingroup/:myid/:groupid',mana.joinGroup);
 app.options('/searchpeople',sendSuccess);
 app.get('/searchpeople', mana.searchPeople); 
 //Person
-app.options('/getinformation/:personID', sendSuccess);
-app.get('/getinformation/:personID', mana.getPersonInfo);
+app.options('/getinformation/:personid', sendSuccess);
+app.get('/getinformation/:personid', mana.getPersonInfo);
 //Group
-app.options('/getfeed/:groupID',sendSuccess);
-app.get('/getfeed/:groupID', mana.getFeed); 
-app.options('/getbadges/:groupID',sendSuccess);
-app.get('getbades/:groupID', mana.getBadges); 
-app.options('/getpictures/:groupID',sendSuccess);
-app.get('/getpictures/:groupID', mana.getPictures); 
-app.options('/getcalories/:groupID',sendSuccess);
-app.get('/getcalories/:groupID', mana.getCalories); 
-app.options('/getmembers/:groupID',sendSuccess);
-app.get('/getmembers/:groupID',  mana.getMembers); 
+app.options('/getfeed/:groupid',sendSuccess);
+app.get('/getfeed/:groupid', mana.getFeed); 
+app.post('/addpicture/:groupid/:picturelink', mana.addPicture);
+app.post('/writefeed/:myid/:groupid/:content', mana.writeFeed);
+app.options('/getgroupinfo/:groupid',sendSuccess);
+app.get('/getgroupinfo/:groupid', mana.getGroupInfo); 
+
 //Corporation
 app.options('/getgroups',sendSuccess);
 app.get('/getgroups',  mana.getGroups); 

@@ -18,18 +18,26 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,400italic' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script>
-    $.get( "http://localhost:1337/getinformation/52625f659d5dd98a571d112f", function( data ) {
-      //$( ".result" ).html( data );
-      console.log(data);
-      alert( "Load was performed." );
-      $("#age").text(data.age);
-      /*$.get( "http://localhost:1337/getgroupinfo/" + data.group_id, function( data ) {
-      //$( ".result" ).html( data );
-        alert(data.);
-        alert( "Load was performed." );
-
-      });*/
-    });
+    $.get( 
+      "http://localhost:1337/getinformation/52625f659d5dd98a571d112f", 
+      function( data ) {
+        //$( ".result" ).html( data );
+        // console.log(data);
+        // alert( "Load was performed." );
+        $("#name").text(data.name);
+        $("#team").text(data.team);
+        $("#age").text(data.age);
+        $("#calories").text(data.calories);
+        $("#weight").text(data.weight);
+        $("#longest_run").text(data.longest_run);
+        $("#lives_saved").text(data.calories / 120);
+        /*$.get( "http://localhost:1337/getgroupinfo/" + data.group_id, function( data ) {
+        //$( ".result" ).html( data );
+          alert(data.);
+          alert( "Load was performed." );
+        });*/
+      }
+    );
     </script>
   </head>
 
@@ -81,17 +89,17 @@
       <h1>Profile for Jonathon</h1>
       <div class="row">
         <div class="col-lg-4">
-          <center><img src="assets/img/profile.jpg" style="max-height:200px;"/></center>
+          <center><img src="assets/img/profile.jpg" style="max-height:300px;"/></center>
         </div>
         <div class="col-lg-8" id="enter_info">
           <table class="table">
             <tr>
               <td><b>Name</b></td>
-              <td>Jonathon Blonchek</td>
+              <td id="name">Jonathon Blonchek</td>
             </tr>
-		    <tr>
+		        <tr>
               <td><b>Team</b></td>
-              <td><a href="team.html">Mana Madness</a></td>
+              <td id="team"><a href="team.html">Mana Madness</a></td>
             </tr>
             <tr>
               <td><b>Age</b></td>
@@ -99,19 +107,19 @@
             </tr>
             <tr>
               <td><b>Weight</b></td>
-              <td>170 lbs</td>
+              <td id="weight">170 lbs</td>
             </tr>
-			<tr>
+			      <tr>
               <td><b>Lives saved</b></td>
-              <td>70</td>
+              <td id="lives_saved">70</td>
             </tr>
-			<tr>
+			      <tr>
               <td><b>Calories donated</b></td>
-              <td>3500</td>
+              <td id="calories">3500</td>
             </tr>
-			<tr>
+			      <tr>
               <td><b>Longest run</b></td>
-              <td>12 miles</td>
+              <td id="longest_run">12 miles</td>
             </tr>
           </table>
         </div>

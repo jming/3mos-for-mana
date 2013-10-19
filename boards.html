@@ -18,8 +18,19 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,400italic' rel='stylesheet' type='text/css'>
 
     <!-- jQuery -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
     <!-- BEGIN TimelineJS -->
+     <script src="assets/d3.v2_2.8.1.js"></script>
+    <script src="assets/jquery_2.0.3.min.js"></script>
+    <script src="assets/nv.d3.min.js"></script>
+    <script src="assets/novus-nvd3-683eb18/src/tooltip.js"></script>
+    <script src="assets/novus-nvd3-683eb18/src/utils.js"></script>
+    <script src="assets/novus-nvd3-683eb18/src/models/legend.js"></script>
+    <script src="assets/novus-nvd3-683eb18/src/models/axis.js"></script>
+    <script src="assets/novus-nvd3-683eb18/src/models/multiBar.js"></script>
+    <script src="assets/novus-nvd3-683eb18/src/models/multiBarChart.js"></script>
+    <!-- BEGIN TimelineJS -->
+    <script type="text/javascript" src="assets/js/storyjs-embed.js"></script>
     <script type="text/javascript" src="assets/js/storyjs-embed.js"></script>
     <script>
         $(document).ready(function() {
@@ -33,12 +44,510 @@
         });
     </script>
     <!-- END TimelineJS -->
+  <link href="assets/novus-nvd3-683eb18/src/nv.d3.css" 
+      rel="stylesheet" type="text/css">
+<style>
 
+
+/*
+ * Style for wealth of nations chart
+ */ 
+#chart {
+  margin-left: -40px;
+  height: 250px;
+}
+
+text {
+  font: 10px sans-serif;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.label {
+  fill: #777;
+}
+
+.week.label {
+  font: 400 49px "Helvetica Neue";
+  fill: #ddd;
+}
+
+.year.label {
+  font: 500 196px "Helvetica Neue";
+  fill: #ddd;
+}
+
+.year.label.active {
+  fill: #aaa;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+  cursor: ew-resize;
+}
+
+// Style for multi-bar chart
+ 
+body {
+  overflow-y:scroll;
+}
+
+/*text {
+  font: 12px sans-serif;
+}*/
+
+#barchart {
+  height: 275px;
+  margin: 10px;
+  min-width: 100px;
+  min-height: 100px;
+/*
+  Minimum height and width is a good idea to prevent negative SVG dimensions...
+  For example width should be =< margin.left + margin.right + 1,
+  of course 1 pixel for the entire chart would not be very useful, BUT should not have errors
+*/
+}
+
+rect.nv-bar.positive{
+  border: 5px solid #000;
+}
+</style>
+<script>
+$(document).ready(function() {
+    var barchart_data, barchart;
+    var timeseries_data, timeseries;
+    $.getJSON("assets/akamai_timeseries.json", function(data){
+              
+      timeseries_data = data;
+      timeseries = new TimeSeries();
+
+      $.getJSON("assets/akamai_barchart.json", function(data2){
+              barchart_data = data2;
+              barchart = new Barchart();
+              enter_data(timeseries_data, barchart_data);
+  
+        });
+    });
+
+    d3.select("#start").on("click", function(){
+      timeseries.transitioning = true;
+      // Start a transition that interpolates the data based on year.
+      timeseries.svg.transition()
+          .duration(3500 * timeseries.time_range)
+          .ease("linear")
+          // Add a custom transition (tweenYear)
+          .tween("year", tweenYear)
+    });
+
+    d3.select("#end").on("click", function(){
+      timeseries.svg.transition().duration(0);
+      timeseries.transitioning = false;
+    });
+
+    function enter_data(timeseries_data, barchart_data){
+      timeseries.setup("#chart", timeseries_data);
+      timeseries.display(timeseries.svg);
+      timeseries.logValues(0);
+      timeseries.overlay.on("mouseover",
+        timeseries.enableInteraction(display_all_graphs));
+
+      //barchart.setup_and_display('#barchart svg', barchart_data);
+    }
+
+    // Tweens the entire chart by first tweening the year, and then the data.
+    // For the interpolated data, the dots and label are redrawn.
+    function tweenYear() {
+      // Construct an interpolator
+      var week = d3.interpolateNumber(0, timeseries.time_range);
+      // Interpolator acts on t, a value ranging from 0 at the start to 1 at the end
+      return function(t) { display_all_graphs(week(t)); };
+    }
+
+    function display_all_graphs(week){
+      timeseries.display_time(week);
+      if(barchart.ready){
+        barchart.display_time(Math.round(week));
+      }
+    }
+});
+
+var food_colors = {"none" : "#D8D8D8", "condiments": "#D8D8D8", "grains": "#ff7f0e", "vegetables": "#2ca02c", "fruits": "#BCF5A9", "highFat": "#d62728", "beverage": "#D8D8D8", "dairy": "#448AC8", "protein": "#BE81F7"};
+
+// general object container for different graphs
+function svgObj() {
+    this.colors = food_colors;
+    this.ready = false;
+    this.transitioning = false;
+    this.prev_week = -1;
+    //this.queue = new Queue();
+};
+
+function Barchart(){
+  svgObj.call(this);
+};
+
+function TimeSeries(){
+  svgObj.call(this, {});
+  this.margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5};
+  this.width = 720 - this.margin.right;
+  this.height = 325 - this.margin.top - this.margin.bottom;
+  this.dimens = {x : "activity_weekly", y: "calories_weekly", radius: "weight_weekly", color: "region"};
+  this.x = function(d){ return d[this.dimens.x]; };
+  this.y = function(d){ return d[this.dimens.y]; };
+  this.radius = function(d){ return d[this.dimens.radius]; };
+  this.color = function(d) { return d[this.dimens.color]; };
+  this.key = function(d) { return d.name; };
+};
+
+TimeSeries.prototype.setup = function(id_element, data){
+  this.data = data;
+  // remove any existing svg
+  d3.select(id_element).select("svg").remove();
+  // append a new svg
+  this.svg = d3.select(id_element).append("svg")
+        .attr("width", this.width + this.margin.left + this.margin.right)
+        .attr("height", this.height + this.margin.top + this.margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + this.margin.left + "," 
+              + this.margin.top + ")");
+  this.bisect = d3.bisector(function(d) { return d[0]; });
+  this.time_range = this.max_days(data);
+  var xMin = this.find_bounds(data, this.dimens["x"], 1),
+      xMax = this.find_bounds(data, this.dimens["x"], 0),
+      yMin = this.find_bounds(data, this.dimens["y"], 1),
+      yMax = this.find_bounds(data, this.dimens["y"], 0),
+      rMin = this.find_bounds(data, this.dimens["radius"], 1),
+      rMax = this.find_bounds(data, this.dimens["radius"], 0);
+  // Various scales. These domains are flexible with the data.
+  this.xScale = d3.scale.linear().domain([ xMin, xMax ])
+                                  .range([0, this.width]);
+  this.yScale = d3.scale.linear().domain([ yMin, yMax ])
+                                  .range([this.height, 0]);
+  this.radiusScale = d3.scale.sqrt().domain([ rMin, rMax ])
+                                  .range([10, 40]);
+  this.colorScale = d3.scale.category10();
+  this.xAxis = d3.svg.axis().orient("bottom")
+                .scale(this.xScale).ticks(12, d3.format(",d"));
+  this.yAxis = d3.svg.axis().scale(this.yScale).orient("left");
+}
+
+TimeSeries.prototype.display = function(svg){
+
+  var obj = this;
+  // Positions the dots based on data.
+  TimeSeries.prototype.position = function (dot) {
+    dot .attr("cx", function(d) { return obj.xScale(obj.x(d)); })
+        .attr("cy", function(d) { return obj.yScale(obj.y(d)); })
+        .attr("r", function(d) { return obj.radiusScale(obj.radius(d)); });
+  }
+
+      // Positions the dot labels based on data.
+  TimeSeries.prototype.position_label = function(dot_label) {
+    dot_label .attr("x", function(d) { return obj.xScale(obj.x(d)); })
+              .attr("y", function(d) { return obj.yScale(obj.y(d)); });
+  }
+
+  // Defines a sort order so that the smallest dots are drawn on top.
+  TimeSeries.prototype.order = function(a, b) {
+    return obj.radius(b) - obj.radius(a);
+  }
+  // Add the x-axis.
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + this.height + ")")
+      .call(this.xAxis);
+
+  // Add the y-axis.
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(this.yAxis);
+
+  // Add an x-axis label.
+  svg.append("text")
+      .attr("class", "x label")
+      .attr("text-anchor", "end")
+      .attr("x", this.width)
+      .attr("y", this.height - 6)
+      .text(this.dimens["x"]);
+
+  // Add a y-axis label.
+  svg.append("text")
+      .attr("class", "y label")
+      .attr("text-anchor", "end")
+      .attr("y", 6)
+      .attr("dy", ".75em")
+      .attr("transform", "rotate(-90)")
+      .text(this.dimens["y"]);
+
+  // Add the year label; the value is set on transition.
+  this.label = svg.append("text")
+      .attr("class", "year label")
+      .attr("text-anchor", "end")
+      .attr("y", this.height - 24)
+      .attr("x", this.width)
+      .text(0);
+
+  svg.append("text")
+      .attr("class", "week label")
+      .attr("text-anchor", "end")
+      .attr("y", this.height - 174)
+      .attr("x", this.width)
+      .text("Week");
+
+  // Add a dot per nation. Initialize the data at 0, and set the colors.
+  this.dot = svg.append("g")
+      .attr("class", "dots")
+      .selectAll(".dot")
+      .data(this.interpolateData(obj, 0))
+      .enter().append("circle")
+      .attr("class", "dot")
+      .style("fill", function(d) { return obj.colorScale(obj.color(d)); })
+      .call(this.position)
+      .sort(this.order);
+
+  this.dot_label = svg.append("g")
+      .attr("class", "dot_labels")
+      .selectAll(".dot_label")
+      .data(this.interpolateData(obj, 0))
+      .enter().append("text")
+      .attr("x", function(d) { return obj.xScale(obj.x(d)); })
+      .attr("y", function(d) { return obj.yScale(obj.y(d)); })
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "16px")
+      .attr("fill", "black")
+      .attr("text-anchor", "middle")
+      .text(function(d) { return d.name; });
+
+  // Add a title.
+  this.dot.append("title")
+      .text(function(d) { return d.name; });
+
+  // Add an overlay for the year label.
+  this.box = this.label.node().getBBox();
+
+  this.overlay = svg.append("rect")
+        .attr("class", "overlay")
+        .attr("x", this.box.x)
+        .attr("y", this.box.y)
+        .attr("width", this.box.width)
+        .attr("height", this.box.height);
+
+}
+
+TimeSeries.prototype.interpolateData = function(obj, year) {
+  // obj points to the overarching timeseries object that everything is bound to
+  return obj.data.map(function(d) {
+    return {
+      name: d.name,
+      region: d.region,
+      activity_weekly: 
+        obj.interpolateValues(d[obj.dimens.x], year),
+      weight_weekly: 
+        obj.interpolateValues(d[obj.dimens.radius], year),
+      calories_weekly: 
+        obj.interpolateValues(d[obj.dimens.y], year)
+    };
+  });
+}
+
+// Finds (and possibly interpolates) the value for the specified year.
+TimeSeries.prototype.interpolateValues = function(values, year) {
+  // Find the index of the insertion point for the value for a given year
+  var len = values.length - 1;
+  var i = this.bisect.left(values, year, 0, len),
+      a = values[i];
+  // End of user recorded values: stay at last value
+  if (i >= len){
+    var val = values[len][1];
+    values.push([i, val]);
+    return this.interpolateValues(values, year);
+  }
+  if (i > 0) {
+    var b = values[i - 1],
+        t = (year - a[0]) / (b[0] - a[0]);
+    return a[1] * (1 - t) + b[1] * t;
+  }
+  return a[1];
+}
+
+TimeSeries.prototype.enableInteraction = function(handler) {
+
+  var yearScale = d3.scale.linear()
+      .domain([0, this.time_range])
+      .range([this.box.x + 10, this.box.x + this.box.width - 10])
+      .clamp(true);
+
+  // Cancel the current transition, if any.
+  this.svg.transition().duration(0);
+
+  this.overlay
+      .on("mouseover", mouseover)
+      .on("mouseout", mouseout)
+      .on("mousemove", mousemove)
+      .on("touchmove", mousemove);
+
+  function mouseover() {
+    this.label.classed("active", true);
+  }
+
+  function mouseout() {
+    this.label.classed("active", false);
+  }
+
+  function mousemove() {
+    handler(yearScale.invert(d3.mouse(this)[0]));
+  }
+}
+
+// Updates the display to show the specified year.
+TimeSeries.prototype.display_time = function(year) {
+  // binds data (again) in alphabetical order (see key)
+  this.dot.data(this.interpolateData(this, year), this.key).call(this.position).sort(this.order);
+  this.dot_label.data(this.interpolateData(this, year), this.key).call(this.position_label);
+  this.label.text(Math.round(year));
+  this.logValues(Math.round(year));
+}
+
+TimeSeries.prototype.logValues = function(week){
+  var tmp;
+  var log = "<p>";
+  for (var attr in this.dimens){
+    attribute = this.dimens[attr];
+    if (attribute == "region"){
+      break;
+    }
+    try{
+      tmp = this.data[0][attribute].filter(function(x){ return x[0] == week});
+      log += attribute + ": " + tmp[0][1];
+      if (attribute == "weight_weekly"){
+        log += "&#37;";
+      }
+    }
+    catch(err){
+      log += attribute + ": not tracked";
+    }
+    log += "<br>";
+  }
+  log += "</p>";
+  $("#textdata").html(log.replace(/_/g, ' '));
+}
+
+TimeSeries.prototype.find_bounds = function(data, attribute, min){
+    // min for each object over time, then min over all the objects
+   if (min){
+    return d3.min(data, function(d) { 
+                          return d3.min(d[attribute], 
+                                        function(d) { return d[1]; }); });
+   }
+   else{
+    return d3.max(data, function(d) { 
+                          return d3.max(d[attribute], 
+                                        function(d) { return d[1]; }); });
+   }
+}
+
+// return the max number of days any single user in the dataset 
+//    has been in the program
+TimeSeries.prototype.max_days = function(data){
+  var max = 0, val = 0, attribute = "";
+  // iterate over all dimensions
+  for (var attr in this.dimens){
+    attribute = this.dimens[attr];
+    // find longest time span for each attribute
+    val = d3.max(data, function(d) { 
+                            return d3.max(d[attribute], 
+                                          function(d) { return d[0]; }); });
+    if (val > max){
+      max = val;
+    }
+  }
+  return max;
+}
+
+Barchart.prototype.setup_and_display = function (id_element, food_groups_data){
+  // remove any existing svg
+  d3.select(id_element).select("svg").remove();
+
+  var chart; 
+
+  var obj = this;
+
+  nv.addGraph(function() {
+
+    chart = nv.models.multiBarChart();
+      //.barColor(d3.scale.category20().range());
+
+    chart.multibar
+      .hideable(true);
+
+    chart.reduceXTicks(false).staggerLabels(true);
+
+    chart.xAxis
+        .showMaxMin(true);
+      //  .tickFormat(d3.format(',f'));
+
+    chart.yAxis
+        .tickFormat(d3.format(',.2f'));
+
+    d3.select(id_element)
+        .datum(food_groups_data)
+        .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+
+    chart.dispatch.changeState({"stacked":false,"disabled":[false,false,true,true,true,true,true,true]});
+    obj.svg = chart;
+    obj.ready = true;
+
+    return chart;
+  });
+};
+
+Barchart.prototype.change_state = function(i){
+  var state = {"stacked":false,"disabled":[false,false,true,true,true,true,true,true]};
+  var j=1, l = state.disabled.length;
+  while(j<=i+1){
+    state["disabled"][j] = false;
+    j++;
+  }
+  while(j < l){
+    state["disabled"][j] = true;
+    j++;
+  }
+  return state;
+};
+
+Barchart.prototype.display_time = function(i){
+  if(this.ready && this.prev_week != i){
+    var current = this.svg.state();
+    var new_state = this.change_state(i);
+    for (j in current.disabled){
+      if (current["disabled"][j] != new_state["disabled"][j]){
+        this.svg.dispatch.changeState(new_state);
+        this.prev_week = i;
+        return;
+      }
+    }
+  }
+};
+
+
+</script>
   </head>
 
   <body>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
 
       <div class="container">
         <div class="navbar-header">
@@ -83,45 +592,82 @@
     <div class="container">
       <br>
       <h1>Corporate Leaderboards</h1>
-	  <div class="col-lg-8">
-        <img src="assets/img/company.jpg" style="max-height:200px;"/>
-      </div>
+      <img src="assets/img/company.jpg" style="max-height:200px;"/><br>
+
       <div class="row">
-	  <div id="personal" class="container">
-        <h2>Days left: 36</h2>
-		<br>
-      </div>
-        <div class="col-lg-8">
-          <table class="table">
-            <tr>
-              <td><b>Team</b></td>
-			  <td><b>Lives saved</b></td>
-			  <td><b>Other stuff</b></td>
-            </tr>
-            <tr>
-              <td>Best team</td>
-              <td>22</td>
-			  <td>nothing</td>
-            </tr>
-			<tr>
-              <td>second best team</td>
-              <td>9</td>
-			  <td>something</td>
-            </tr>
-          </table>
+      <!-- <div class="container"> -->
+        <div class="col-md-3">
+          <ul class="nav">
+            <li><a href="#challenge">Challenge</a></li>
+            <li><a href="#rankings">Rankings</a></li>
+            <li><a href="#teamstats">Teams</a></li>
+            <li><a href="#events">Events</a></li>
+          </ul>
         </div>
+      <!-- </div> -->
+
+      <!-- <div class="container"> -->
+
+        <div class="col-md-9">
+
+          <div id="challenge">
+            <h2>Challenge Stats</h2>
+            <p>Days left: 36</p>
+            <p>Teams competing: 24</p>
+            <p>Cumulative calories: </p>
+          </div>
+
+          <div id="rankings">
+            <h2>Current Rankings</h2>
+            <div>
+              <table class="table">
+                <tr>
+                  <td><b>Team</b></td>
+                  <td><b>Lives saved</b></td>
+                  <td><b>Other stuff</b></td>
+                </tr>
+                <tr>
+                  <td>Best team</td>
+                  <td>22</td>
+                  <td>nothing</td>
+                  </tr>
+                <tr>
+                  <td>second best team</td>
+                  <td>9</td>
+                  <td>something</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div id="teamstats">
+            <h2>Team Stats</h2>
+            <button id="start">Start Animation</button>
+            <button id="end">Stop Animation</button>
+            <div id="chart-container" style="height:320px">
+              <div id="chart" style="width:75%; float:left"></div>
+            </div>
+          </div>
+
+          <div id="events">
+            <h2>Events Timeline</h2>
+            <div class="container">
+              <div id="my-timeline">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
       </div>
-    </div>
 
-    <div id="my-timeline" class="container">
-    </div>
+      <div class="container">
+        <hr>
 
-    <div class="container">
-      <hr>
-
-      <footer>
-        <p>&copy; Company 2013</p>
-      </footer>
+        <footer>
+          <p>&copy; Company 2013</p>
+        </footer>
+      </div>
     </div> <!-- /container -->
 
     <!-- Le javascript

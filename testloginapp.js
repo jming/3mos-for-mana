@@ -1,0 +1,53 @@
+var express = require('express'), request = require('request');
+var app = express();
+
+// configure Express
+app.configure(function() {
+  app.set('views', __dirname + '/');
+  //app.set('view engine', 'ejs');
+  app.engine('html', require('ejs').renderFile);
+  app.use(express.logger());
+  app.use(express.cookieParser());
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.session({ secret: 'keyboard cat' }));
+  app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
+});
+
+app.get('/loginauth', function(req,res){
+	console.log(req.query.code);
+	var url = 'https://runkeeper.com/apps/token';
+	var headers = {'Content-Type':'application/x-www-form-urlencoded'};
+	var form = {
+		grant_type: 'authorization_code',
+		code: req.query.code,
+		client_id: '4ddf3756df6c4be489cb71397e9f36cb',
+		client_secret: '765a2ba6ee61447ba9bb8a3d3c558291',
+		redirect_uri: 'http://localhost:3000/loginauth'
+	}
+	request.post({url: url, form: form, headers: headers}, function(e,r,body){
+		console.log(body);
+		res.cookie('runkeeperid',body);
+		console.log(res.cookie);
+		res.render('index.html');
+	});
+});
+app.get('/index.html', function(req, res){
+  res.render('index.html');
+});
+
+app.get('/about.html', function(req, res){
+	res.render('about.html');
+});
+
+app.get('/boards.html', function(req, res){
+	res.render('boards.html');
+});
+
+app.get('/profile.html', function(req,res){
+	res.render('profile.html');
+});
+
+app.listen(3000);
+

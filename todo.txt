@@ -1,0 +1,2 @@
+Login Link:
+https://runkeeper.com/apps/authorize?client_id=4ddf3756df6c4be489cb71397e9f36cb&response_type=code&redirect_uri=http://localhost:3000/loginauth

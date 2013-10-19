@@ -36,7 +36,7 @@ mongo.Db.connect(mongoUri, function (err, db) {
     	}
     });
   });
-});
+
 
 //Search
 exports.createGroup = function(req, res){
@@ -80,7 +80,7 @@ exports.joinGroup= function(req, res){
 
 exports.searchPeople= function(req, res){
 	db.collection('people', function(err, collection){
-		if(err){ res.send(404); }
+		if(err){ console.log("ERROR"); res.send(404); }
 		else{
 			collection.find({}).sort({group_id:-1}).toArray(function(err,people){
 				res.send(people);
@@ -223,3 +223,5 @@ exports.getGroups= function(req, res){
 	});
 	
 }
+
+});

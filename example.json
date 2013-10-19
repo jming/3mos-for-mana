@@ -1,26 +1,21 @@
 {
     "timeline":
     {
-        "headline":"The Main Timeline Headline Goes here",
+        "headline":"Weight Loss at the Office",
         "type":"default",
-        "text":"<p>Intro body text goes here, some HTML is ok</p>",
+        "text":"<p>Team A lost 18 pounds in total!</p>",
         "asset": {
             "media":"http://eofdreams.com/data_images/dreams/people/people-03.jpg",
-            "caption":"Team A!"
+            "caption":"Team A at the office photo shoot"
         },
         "date": [
             {
-                "startDate":"2011,12,10",
-                "endDate":"2011,12,11",
-                "headline":"Headline Goes Here",
-                "text":"<p>Body text goes here, some HTML is OK</p>",
-                "tag":"This is Optional",
-                "classname":"optionaluniqueclassnamecanbeaddedhere",
+                "startDate":"2013,10,10",
+                "endDate":"2013,10,11",
+                "headline":"Jonathan and Lindsey lead an office hiking trip!",
                 "asset": {
-                    "media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
-                    "thumbnail":"css/person_blank.png",
-                    "credit":"Credit Name Goes Here",
-                    "caption":"Caption text goes here"
+                    "media": "http://twitter.com/jblonchek/statuses/336308388973666305",
+                    "thumbnail":"http://bebalex.com/wp-content/uploads/2012/11/person_blank.png"
                 }
             }
         ],
@@ -29,8 +24,7 @@
                 "startDate":"2011,12,10",
                 "endDate":"2011,12,11",
                 "headline":"The Amazing Race!",
-                "text":"<p>Body text goes here, some HTML is OK</p>",
-                "tag":"This is Optional"
+                "text":"<p>Office teams compete in a walk-a-thon!</p>"
             }
 
         ]

@@ -18,6 +18,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,400italic' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script>
+<<<<<<< HEAD
     $.get( 
       "http://localhost:1337/getinformation/52625f659d5dd98a571d112f", 
       function( data ) {
@@ -38,6 +39,19 @@
         });*/
       }
     );
+=======
+    $.get( "http://localhost:1337/getinformation/52625f659d5dd98a571d112f", function( data ) {
+      //$( ".result" ).html( data );
+      console.log(data);
+      $("#age").text(data.age);
+      /*$.get( "http://localhost:1337/getgroupinfo/" + data.group_id, function( data ) {
+      //$( ".result" ).html( data );
+        alert(data.);
+        alert( "Load was performed." );
+
+      });*/
+    });
+>>>>>>> b8d1bae1b3c5cd648c94b71411aaace1ae8f8d4a
     </script>
   </head>
 

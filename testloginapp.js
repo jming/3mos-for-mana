@@ -14,9 +14,7 @@ app.configure(function() {
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
-
 app.get('/loginauth', function(req,res){
-	console.log(req.query.code);
 	var url = 'https://runkeeper.com/apps/token';
 	var headers = {'Content-Type':'application/x-www-form-urlencoded'};
 	var form = {
@@ -26,12 +24,18 @@ app.get('/loginauth', function(req,res){
 		client_secret: '765a2ba6ee61447ba9bb8a3d3c558291',
 		redirect_uri: 'http://localhost:3000/loginauth'
 	}
+	if(req.query.code){
 	request.post({url: url, form: form, headers: headers}, function(e,r,body){
+		console.log("BODY");
 		console.log(body);
-		res.cookie('runkeeperid',body);
-		console.log(res.cookie);
-		res.render('index.html');
+		console.log("-----");
+		res.cookie('cookiename', body, { maxAge: 900000, httpOnly: false });
+		res.send(200);
 	});
+	}
+});
+app.get('/runkeeperid',function(req,res){
+	res.send(req.cookies.cookiename.split("\"access_token\":\"")[1].split("\"")[0]);
 });
 app.get('/index.html', function(req, res){
   res.render('index.html');

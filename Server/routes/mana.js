@@ -54,7 +54,14 @@ exports.joinGroup= function(req, res){
 };
 
 exports.searchPeople= function(req, res){
-
+	db.collection('people', function(err, collection){
+		if(err){ res.send(404); }
+		else{
+			collection.find({}).sort({group_id:-1}).toArray(function(err,items){
+				res.send(items);
+			});
+		}
+	});
 }
 
 //Person

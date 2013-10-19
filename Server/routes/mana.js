@@ -36,7 +36,7 @@ mongo.Db.connect(mongoUri, function (err, db) {
     	}
     });
   });
-
+});
 
 //Search
 exports.createGroup = function(req, res){
@@ -223,5 +223,3 @@ exports.getGroups= function(req, res){
 	});
 	
 }
-
-});

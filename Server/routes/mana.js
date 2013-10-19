@@ -34,9 +34,13 @@ mongo.Db.connect(mongoUri, function (err, db) {
    		if(!err){
     		console.log("DID INSERT");
     	}
+    	console.log("DID INSERT1");
     });
+    console.log("DID INSERT2");
   });
+  console.log("DID INSERT3");
 });
+console.log("DID INSERT4");
 
 //Search
 exports.createGroup = function(req, res){

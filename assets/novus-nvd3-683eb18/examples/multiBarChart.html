@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<link href="../src/nv.d3.css" rel="stylesheet" type="text/css">
+
+<style>
+
+body {
+  overflow-y:scroll;
+}
+
+text {
+  font: 12px sans-serif;
+}
+
+#chart1 {
+  height: 500px;
+  margin: 10px;
+  min-width: 100px;
+  min-height: 100px;
+/*
+  Minimum height and width is a good idea to prevent negative SVG dimensions...
+  For example width should be =< margin.left + margin.right + 1,
+  of course 1 pixel for the entire chart would not be very useful, BUT should not have errors
+*/
+}
+
+</style>
+<body>
+
+  <div id="chart1">
+    <svg></svg>
+  </div>
+
+<script src="../lib/d3.v3.js"></script>
+<script src="../nv.d3.js"></script>
+<script src="../src/tooltip.js"></script>
+<script src="../src/utils.js"></script>
+<script src="../src/models/legend.js"></script>
+<script src="../src/models/axis.js"></script>
+<script src="../src/models/multiBar.js"></script>
+<script src="../src/models/multiBarChart.js"></script>
+<script src="stream_layers.js"></script>
+<script>
+
+var test_data = stream_layers(3,10+Math.random()*100,.1).map(function(data, i) {
+//var test_data = stream_layers(3,1,.1).map(function(data, i) { //for testing single data point
+  return {
+    key: 'Stream' + i,
+    values: data
+  };
+});
+
+
+
+var negative_test_data = new d3.range(0,3).map(function(d,i) { return {
+  key: 'Stream' + i,
+  values: new d3.range(0,5).map( function(f,j) {
+    return { 
+             y: 10 + Math.random()*100 * (Math.floor(Math.random()*100)%2 ? 1 : -1),
+             x: j.toString() + " x"
+           }
+  })
+  };  
+});
+
+var test_data = [{"values": [{"y": 0.010638297872340425, "x": "none"}, {"y": 0.0, "x": "condiments"}, {"y": 0.2553191489361702, "x": "grains"}, {"y": 0.26595744680851063, "x": "vegetables"}, {"y": 0.20212765957446807, "x": "fruits"}, {"y": 0.0, "x": "nuts"}, {"y": 0.02127659574468085, "x": "beverage"}, {"y": 0.11702127659574468, "x": "dairy"}, {"y": 0.0, "x": "oils"}, {"y": 0.1276595744680851, "x": "protein"}], "key": "week0"}, {"values": [{"y": 0.04411764705882353, "x": "none"}, {"y": 0.03431372549019608, "x": "condiments"}, {"y": 0.29411764705882354, "x": "grains"}, {"y": 0.29411764705882354, "x": "vegetables"}, {"y": 0.14215686274509803, "x": "fruits"}, {"y": 0.0, "x": "nuts"}, {"y": 0.00980392156862745, "x": "beverage"}, {"y": 0.04411764705882353, "x": "dairy"}, {"y": 0.0, "x": "oils"}, {"y": 0.13725490196078433, "x": "protein"}], "key": "week1"}, {"values": [{"y": 0.046153846153846156, "x": "none"}, {"y": 0.010256410256410256, "x": "condiments"}, {"y": 0.2717948717948718, "x": "grains"}, {"y": 0.22564102564102564, "x": "vegetables"}, {"y": 0.21025641025641026, "x": "fruits"}, {"y": 0.0, "x": "nuts"}, {"y": 0.0, "x": "beverage"}, {"y": 0.08205128205128205, "x": "dairy"}, {"y": 0.0, "x": "oils"}, {"y": 0.15384615384615385, "x": "protein"}], "key": "week2"}, {"values": [{"y": 0.025477707006369428, "x": "none"}, {"y": 0.01910828025477707, "x": "condiments"}, {"y": 0.2484076433121019, "x": "grains"}, {"y": 0.34394904458598724, "x": "vegetables"}, {"y": 0.12101910828025478, "x": "fruits"}, {"y": 0.0, "x": "nuts"}, {"y": 0.012738853503184714, "x": "beverage"}, {"y": 0.07006369426751592, "x": "dairy"}, {"y": 0.0, "x": "oils"}, {"y": 0.1592356687898089, "x": "protein"}], "key": "week3"}, {"values": [{"y": 0.04242424242424243, "x": "none"}, {"y": 0.03636363636363636, "x": "condiments"}, {"y": 0.21818181818181817, "x": "grains"}, {"y": 0.3696969696969697, "x": "vegetables"}, {"y": 0.1696969696969697, "x": "fruits"}, {"y": 0.0, "x": "nuts"}, {"y": 0.0, "x": "beverage"}, {"y": 0.07878787878787878, "x": "dairy"}, {"y": 0.0, "x": "oils"}, {"y": 0.08484848484848485, "x": "protein"}], "key": "week4"}, {"values": [{"y": 0.05, "x": "none"}, {"y": 0.0, "x": "condiments"}, {"y": 0.25, "x": "grains"}, {"y": 0.1, "x": "vegetables"}, {"y": 0.5, "x": "fruits"}, {"y": 0.0, "x": "nuts"}, {"y": 0.0, "x": "beverage"}, {"y": 0.0, "x": "dairy"}, {"y": 0.0, "x": "oils"}, {"y": 0.1, "x": "protein"}], "key": "week5"}, {"values": [{"y": 0.0, "x": "none"}, {"y": 0.0, "x": "condiments"}, {"y": 0.45454545454545453, "x": "grains"}, {"y": 0.36363636363636365, "x": "vegetables"}, {"y": 0.0, "x": "fruits"}, {"y": 0.0, "x": "nuts"}, {"y": 0.0, "x": "beverage"}, {"y": 0.18181818181818182, "x": "dairy"}, {"y": 0.0, "x": "oils"}, {"y": 0.0, "x": "protein"}], "key": "week6"}];
+
+console.log(JSON.stringify(test_data));
+
+var chart;
+nv.addGraph(function() {
+    chart = nv.models.multiBarChart()
+      .barColor(d3.scale.category20().range());
+
+    chart.multibar
+      .hideable(true);
+
+    chart.reduceXTicks(false).staggerLabels(true);
+
+    chart.xAxis
+        .showMaxMin(true);
+      //  .tickFormat(d3.format(',f'));
+
+    chart.yAxis
+        .tickFormat(d3.format(',.1f'));
+
+    d3.select('#chart1 svg')
+        .datum(test_data)
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
+
+    return chart;
+});
+
+
+
+
+</script>

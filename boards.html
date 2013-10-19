@@ -591,12 +591,13 @@ Barchart.prototype.display_time = function(i){
 
     <div class="container">
       <br>
-      <h1>Corporate Leaderboards</h1>
+      
       
 
       <div class="row">
       <!-- <div class="container"> -->
         <div class="col-md-3">
+          <br><br><br><br><br>
           <ul class="nav">
             <li><a href="#challenge">Challenge</a></li>
             <li><a href="#rankings">Rankings</a></li>
@@ -609,32 +610,33 @@ Barchart.prototype.display_time = function(i){
       <!-- <div class="container"> -->
 
         <div class="col-md-9">
-          <img src="assets/img/company.jpg" style="max-height:200px;"/><br>
           <div id="challenge">
+            <h1>Corporate Leaderboards</h1>
+          <img src="assets/img/company.jpg" style="max-height:200px;"/><br>
             <h2>Challenge Stats</h2>
             <p>Days left: 36</p>
             <p>Teams competing: 24</p>
             <p>Cumulative calories: </p>
           </div>
-
-          <div id="rankings">
-            <h2>Current Rankings</h2>
+          <div id="rankings"></div>
+          <div>
             <div>
+              <h2>Current Rankings</h2>
               <table class="table">
                 <tr>
                   <td><b>Team</b></td>
                   <td><b>Lives saved</b></td>
-                  <td><b>Other stuff</b></td>
+                  <td><b>Other</b></td>
                 </tr>
                 <tr>
-                  <td>Best team</td>
+                  <td><a href="team.html">Mana Madness</a></td>
                   <td>22</td>
-                  <td>nothing</td>
+                  <td>N/A</td>
                   </tr>
                 <tr>
-                  <td>second best team</td>
+                  <td><a href="team.html">Manaics!</a></td>
                   <td>9</td>
-                  <td>something</td>
+                  <td>N/A</td>
                 </tr>
               </table>
             </div>
@@ -642,8 +644,8 @@ Barchart.prototype.display_time = function(i){
 
           <div id="teamstats">
             <h2>Team Stats</h2>
-            <button id="start">Start Animation</button>
-            <button id="end">Stop Animation</button>
+            <button class="btn btn-success" id="start">Start Animation</button>
+            <button class="btn btn-success" id="end">Stop Animation</button>
             <div id="chart-container" style="height:320px">
               <div id="chart" style="width:75%; float:left"></div>
             </div>

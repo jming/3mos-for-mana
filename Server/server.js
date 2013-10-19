@@ -32,10 +32,10 @@ app.get('/getinformation/:personid', mana.getPersonInfo);
 //Group
 app.options('/getfeed/:groupid',sendSuccess);
 app.get('/getfeed/:groupid', mana.getFeed); 
-app.post('/addpicture/:groupid/:picturelink', mana.addPicture);
 app.post('/writefeed/:myid/:groupid/:content', mana.writeFeed);
 app.options('/getgroupinfo/:groupid',sendSuccess);
 app.get('/getgroupinfo/:groupid', mana.getGroupInfo); 
+app.post('/addpicture/:groupid/:picturelink', mana.addPicture);
 
 //Corporation
 app.options('/getgroups',sendSuccess);

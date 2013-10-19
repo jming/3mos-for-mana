@@ -93,10 +93,9 @@ exports.writeFeed = function(req, res){
 							}
 						});
 					}
-		
+				});
 			});
-			});
-		};
+		}
 	});
 }
 
@@ -112,10 +111,6 @@ exports.getFeed= function(req, res){
 	});
 }
 
-/*exports.getBadges= function(req, res){
-	var groupid = res.params.groupid;
-}*/
-
 exports.addPicture = function(req, res){
 	var groupid = req.params.groupid;
 	var picture = req.params.picturelink;
@@ -127,35 +122,13 @@ exports.addPicture = function(req, res){
 		}
 	});
 }
-/*
-exports.getPictures= function(req, res){
-	var groupid = res.params.groupid;
-}
-
-exports.getCalories= function(req, res){
-	var groupid = res.params.groupid;
-}
-
-exports.getMembers= function(req, res){
-	var groupid = res.params.groupid;
-	db.collection('groups', function(err, collection){
-		if(err){ res.send(404); }
-		else{
-			collection.find({'_id':new BSON.Objectid(groupid)} function(err,group){
-				res.send(group.people_list);
-			});
-		}
-	});
-
-}
-*/
 
 exports.getGroupInfo = function(req, res){
 	var groupid = req.params.groupid;
 	db.collection('groups', function(err, collection){
 		if(err){ res.send(404); }
 		else{
-			collection.findOne({'_id':new BSON.Objectid(groupid)}, function(err,group){
+			collection.findOne({'_id':new BSON.ObjectID(groupid)}, function(err,group){
 				res.send(group);
 			});
 		}
@@ -165,5 +138,13 @@ exports.getGroupInfo = function(req, res){
 }
 //Corporation
 exports.getGroups= function(req, res){
-
+	db.collection('groups', function(err, collection){
+		if(err){ res.send(404); }
+		else{
+			collection.find({}).toArray(function(err,groups){
+				res.send(groups);
+			});
+		}
+	});
+	
 }
